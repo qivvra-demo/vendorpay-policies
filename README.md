@@ -73,12 +73,13 @@ npm run select -- --repo vendorpay --repo-dir ../vendorpay-app \
 
 For PR #482 this selects 6 policies and 14 obligations. The two that matter:
 
-| Obligation | Commit 1 (8cafa75) | Commit 2 (88b666a) |
-|---|---|---|
-| FIN-001.1 Requester cannot approve | VIOLATED | SUPPORTED |
-| FIN-002.1 Scheduled payments held after a bank change | INSUFFICIENT | INSUFFICIENT |
+| Obligation | Commit 1 (8cafa75) | Commit 2 (88b666a) | Commit 3 (aaf2a60) |
+|---|---|---|---|
+| FIN-001.1 Requester cannot approve | VIOLATED | SUPPORTED | SUPPORTED |
+| FIN-002.1 Scheduled payments held after a bank change | VIOLATED | VIOLATED | SUPPORTED |
+| Disposition | NOT READY | NOT READY | READY |
 
-VP-184's acceptance criteria mention neither rule. That gap between the story and the policy is what QIVVRA exists to catch.
+VP-184's original acceptance criteria mention neither rule, and the team's tests are green on all three commits. That gap between the story and the policy is what QIVVRA exists to catch. FIN-002 is VIOLATED rather than INSUFFICIENT because verifier V3 actively proves the payment is still releasable to the replaced account.
 
 ## Changing a rule
 
@@ -91,7 +92,7 @@ VP-184's acceptance criteria mention neither rule. That gap between the story an
 
 Copy `exceptions/_template.yaml` to `exceptions/<authority>/EXC-<n>.yaml`. The validator refuses exceptions to policies that allow none (FIN-001, FIN-003, SEC-001, PLT-001), exceptions longer than the policy's `max_days`, and exceptions filed under the wrong authority's folder.
 
-Example: Finance could grant a 14-day exception to FIN-002 for VP-184 if they review scheduled payments by hand meanwhile. PR #482 commit 2 would then be READY WITH EXCEPTIONS instead of NOT READY.
+Exceptions only cover INSUFFICIENT obligations (no evidence either way). They never cover VIOLATED ones, so no exception can make PR #482 commit 2 shippable.
 
 ## Repository settings
 

@@ -1,0 +1,34 @@
+# QIVVRA's independent verifiers. They live in the qivvra-verifiers repository,
+# not in the application repo, so a team cannot weaken the checks on its own change.
+apiVersion: qivvra/v1
+kind: VerifierCatalog
+verifiers:
+  V1:
+    name: Environment identity
+    checks:
+      qe-runs-head-commit: QE /version reports the PR head commit before and after the run.
+  V2:
+    name: Separation of duties
+    checks:
+      bank-change-self-approval-blocked: The requester of a bank change gets 403 when approving it; a second approver succeeds.
+      proposed-account-not-payable: A payment cannot be scheduled to, or released to, an account that is still proposed.
+      payment-self-release-blocked: The scheduler of a payment gets 403 when releasing it.
+      payment-single-release: A second release of the same payment gets 409.
+  V3:
+    name: Scheduled payment safety
+    checks:
+      scheduled-payments-held: After an approved bank change, the supplier's scheduled payments are on hold and release is refused.
+      no-silent-redirect: No scheduled payment's destination changes without a recorded Finance decision.
+      held-payment-visible: Held payments appear to Finance with a hold reason.
+  V4:
+    name: Data exposure
+    checks:
+      ui-masked: Every screen showing a bank account shows only the last four digits.
+      api-masked: No API response body contains a 9 to 18 digit run.
+      logs-masked: The application log and audit details contain no 9 to 18 digit run.
+  V5:
+    name: Audit trail
+    checks:
+      bank-change-actors-recorded: Bank change records hold distinct requester and approver.
+      bank-change-audited: Request, approve and reject each write an audit event with the actor.
+      payment-steps-audited: Schedule, release and hold each write an audit event with the actor.

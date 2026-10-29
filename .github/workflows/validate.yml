@@ -1,0 +1,23 @@
+# Every policy change is validated before it can merge. Combined with
+# "Require review from Code Owners", a rule only lands when it is valid AND
+# its owning authority (Finance, Security, Compliance, Platform) approved it.
+name: Validate policies
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run validate
+      - name: Show what the VP-184 bank change would be assured against
+        run: npm run select -- --repo vendorpay --paths src/routes/bankChanges.ts,db/migrations/002_bank_change_requests.sql,public/app.js --jira VP-184

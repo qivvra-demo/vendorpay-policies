@@ -1,0 +1,31 @@
+apiVersion: qivvra/v1
+kind: Policy
+id: SEC-001
+title: Bank account numbers never leave the service unmasked
+version: 1.1.0
+status: approved
+authority: security
+owner: "@vendorpay/security"
+severity: high
+applies_to:
+  components: [supplier-bank-accounts, payments, audit, logging]
+rule: >
+  A bank account number is shown only as its last four digits ("**** 4421")
+  in screens, API responses, audit details and application logs.
+rationale: Full account numbers are sensitive financial data and a fraud enabler.
+obligations:
+  - id: SEC-001.1
+    statement: Screens show only the last four digits of any bank account.
+    evidence: { verifier: V4, check: ui-masked }
+  - id: SEC-001.2
+    statement: API responses never contain a full bank account number.
+    evidence: { verifier: V4, check: api-masked }
+  - id: SEC-001.3
+    statement: Application logs and audit details never contain a full bank account number.
+    evidence: { verifier: V4, check: logs-masked }
+on_violated: block
+on_insufficient: block
+exceptions:
+  allowed: false
+effective_from: 2026-01-01
+review_by: 2027-03-31

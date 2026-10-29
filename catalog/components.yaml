@@ -1,0 +1,52 @@
+# Maps code paths in each repository to components. QIVVRA uses this to pick
+# the policies that apply to a change from the files the change touches.
+apiVersion: qivvra/v1
+kind: ComponentCatalog
+repositories:
+  vendorpay:
+    github: vendorpay/vendorpay-app
+    jira_project: VP
+    profile: payments-critical
+    components:
+      supplier-bank-accounts:
+        description: Supplier onboarding, bank accounts, verification and bank changes
+        paths:
+          - src/routes/suppliers.ts
+          - src/routes/bankChanges.ts
+          - db/migrations/**
+          - public/app.js
+      payments:
+        description: Scheduling and releasing supplier payments
+        paths:
+          - src/routes/payments.ts
+          - db/migrations/**
+          - public/app.js
+      audit:
+        description: Audit events and the audit trail API
+        paths:
+          - src/audit.ts
+          - src/routes/audit.ts
+      logging:
+        description: Logging and masking helpers
+        paths:
+          - src/logger.ts
+          - src/mask.ts
+      web-ui:
+        description: Browser client shell and styles
+        paths:
+          - public/**
+      auth:
+        description: Sign-in, tokens and roles
+        paths:
+          - src/auth.ts
+          - src/routes/auth.ts
+      platform:
+        description: Build, deploy and environment identity
+        paths:
+          - Dockerfile
+          - docker-compose.yml
+          - .github/workflows/**
+          - src/routes/meta.ts
+          - src/app.ts
+          - package.json
+          - src/config.ts

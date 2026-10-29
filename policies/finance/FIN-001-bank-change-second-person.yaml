@@ -1,0 +1,36 @@
+apiVersion: qivvra/v1
+kind: Policy
+id: FIN-001
+title: A bank account change needs a second person
+version: 1.0.0
+status: approved
+authority: finance
+owner: "@vendorpay/finance-controls"
+severity: critical
+applies_to:
+  components: [supplier-bank-accounts]
+rule: >
+  A change to a supplier's bank account takes effect only after a person other
+  than the requester approves it. No role, combination of roles or admin path
+  may let one person both request and approve the same change.
+rationale: >
+  Redirecting supplier payments to a fraudulent account is the most common
+  payment fraud. Separation of duties means one compromised or dishonest user
+  cannot do it alone. VendorPay already applies the same rule to bank
+  verification and payment release.
+obligations:
+  - id: FIN-001.1
+    statement: The person who requested a bank account change cannot approve it.
+    evidence: { verifier: V2, check: bank-change-self-approval-blocked }
+  - id: FIN-001.2
+    statement: A proposed bank account cannot receive payments before it is approved.
+    evidence: { verifier: V2, check: proposed-account-not-payable }
+  - id: FIN-001.3
+    statement: The requester and the approver of every change are recorded.
+    evidence: { verifier: V5, check: bank-change-actors-recorded }
+on_violated: block
+on_insufficient: block
+exceptions:
+  allowed: false
+effective_from: 2026-01-01
+review_by: 2027-06-30

@@ -1,0 +1,32 @@
+apiVersion: qivvra/v1
+kind: Policy
+id: CMP-001
+title: Every supplier and payment change is in the audit trail
+version: 1.0.0
+status: approved
+authority: compliance
+owner: "@vendorpay/compliance"
+severity: high
+applies_to:
+  components: [supplier-bank-accounts, payments, audit]
+rule: >
+  Every create, verify, change, approve, reject, schedule and release of a
+  supplier, bank account or payment writes an audit event naming the actor,
+  the record and what changed.
+rationale: Auditors must be able to reconstruct who moved money and why.
+obligations:
+  - id: CMP-001.1
+    statement: Each bank account change step (request, approve, reject) writes an audit event with its actor.
+    evidence: { verifier: V5, check: bank-change-audited }
+  - id: CMP-001.2
+    statement: Each payment step (schedule, release, hold) writes an audit event with its actor.
+    evidence: { verifier: V5, check: payment-steps-audited }
+on_violated: block
+on_insufficient: block
+exceptions:
+  allowed: true
+  approver_authority: compliance
+  max_days: 30
+  requires: [compensating_control, expiry]
+effective_from: 2026-01-01
+review_by: 2027-06-30

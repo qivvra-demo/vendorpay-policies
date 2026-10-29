@@ -1,0 +1,28 @@
+apiVersion: qivvra/v1
+kind: Policy
+id: FIN-003
+title: A payment is released by someone other than its scheduler
+version: 1.0.0
+status: approved
+authority: finance
+owner: "@vendorpay/finance-controls"
+severity: critical
+applies_to:
+  components: [payments]
+rule: >
+  Only a Finance Approver releases a payment, never the person who scheduled
+  it, and a payment is released at most once.
+rationale: Separation of duties on money movement.
+obligations:
+  - id: FIN-003.1
+    statement: The scheduler of a payment cannot release it.
+    evidence: { verifier: V2, check: payment-self-release-blocked }
+  - id: FIN-003.2
+    statement: A payment cannot be released twice.
+    evidence: { verifier: V2, check: payment-single-release }
+on_violated: block
+on_insufficient: block
+exceptions:
+  allowed: false
+effective_from: 2026-01-01
+review_by: 2027-06-30

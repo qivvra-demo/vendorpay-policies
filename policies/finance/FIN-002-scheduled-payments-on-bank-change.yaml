@@ -1,0 +1,38 @@
+apiVersion: qivvra/v1
+kind: Policy
+id: FIN-002
+title: Scheduled payments are held when the bank account changes
+version: 1.0.0
+status: approved
+authority: finance
+owner: "@vendorpay/finance-controls"
+severity: critical
+applies_to:
+  components: [supplier-bank-accounts, payments]
+rule: >
+  When a supplier's bank account changes, every payment already scheduled for
+  that supplier and not yet released is put on hold for Finance review. It is
+  neither silently paid to the old account nor silently redirected to the new one.
+rationale: >
+  A scheduled payment's destination is fixed when it is created. After a bank
+  change that destination is a closed or wrong account, or the change itself is
+  the fraud. Either way a person must look before money moves.
+obligations:
+  - id: FIN-002.1
+    statement: After a bank change is approved, the supplier's scheduled payments are on hold and cannot be released.
+    evidence: { verifier: V3, check: scheduled-payments-held }
+  - id: FIN-002.2
+    statement: Scheduled payments are never redirected to the new account without a Finance decision.
+    evidence: { verifier: V3, check: no-silent-redirect }
+  - id: FIN-002.3
+    statement: Each held payment is visible to Finance with the reason it was held.
+    evidence: { verifier: V3, check: held-payment-visible }
+on_violated: block
+on_insufficient: block
+exceptions:
+  allowed: true
+  approver_authority: finance
+  max_days: 14
+  requires: [compensating_control, expiry]
+effective_from: 2026-01-01
+review_by: 2027-06-30

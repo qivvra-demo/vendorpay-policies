@@ -1,0 +1,22 @@
+# How QIVVRA turns obligation states into a disposition for repositories on this profile.
+apiVersion: qivvra/v1
+kind: Profile
+id: payments-critical
+title: "Payments: critical financial controls"
+owner: "@vendorpay/qivvra-assurance-leads"
+authorities: [finance, security, compliance, platform]
+disposition:
+  # Evaluated top to bottom; the first match wins.
+  - when: any obligation is NOT_ASSESSED on a policy with severity critical
+    result: INDETERMINATE
+  - when: any obligation is VIOLATED or CONFLICTED
+    result: NOT_READY
+  - when: any obligation is INSUFFICIENT and its policy has no active exception
+    result: NOT_READY
+  - when: any obligation is INSUFFICIENT and its policy has an active exception
+    result: READY_WITH_EXCEPTIONS
+  - when: every obligation is SUPPORTED
+    result: READY
+github:
+  status_check: qivvra/assurance
+  blocking_results: [NOT_READY, INDETERMINATE, AWAITING_ASSESSMENT]

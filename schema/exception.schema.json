@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "qivvra/v1/exception",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["apiVersion", "kind", "id", "policy", "obligations", "scope", "reason", "compensating_control", "approved_by", "expires"],
+  "properties": {
+    "apiVersion": { "const": "qivvra/v1" },
+    "kind": { "const": "Exception" },
+    "id": { "type": "string", "pattern": "^EXC-\\d{4}$" },
+    "policy": { "type": "string" },
+    "obligations": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "jira"],
+      "properties": { "repository": { "type": "string" }, "jira": { "type": "string", "pattern": "^[A-Z]+-\\d+$" } }
+    },
+    "reason": { "type": "string", "minLength": 10 },
+    "compensating_control": { "type": "string", "minLength": 10 },
+    "approved_by": { "type": "string", "pattern": "^@" },
+    "granted": { "type": "string", "format": "date" },
+    "expires": { "type": "string", "format": "date" }
+  }
+}

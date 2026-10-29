@@ -1,0 +1,14 @@
+# Copy to exceptions/<authority>/EXC-<number>.yaml and open a PR.
+# The owning authority's CODEOWNERS approval is what makes the exception valid.
+apiVersion: qivvra/v1
+kind: Exception
+id: EXC-0000
+policy: FIN-002
+obligations: [FIN-002.1]
+scope:
+  repository: vendorpay
+  jira: VP-000
+reason: Why this change may ship before the obligation is met.
+compensating_control: What reduces the risk in the meantime (e.g. Finance manually reviews scheduled payments daily).
+approved_by: "@person-from-the-owning-authority"
+expires: 2026-12-31

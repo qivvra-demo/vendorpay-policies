@@ -1,0 +1,25 @@
+apiVersion: qivvra/v1
+kind: Policy
+id: PLT-001
+title: Evidence comes from the exact commit under review
+version: 1.0.0
+status: approved
+authority: platform
+owner: "@vendorpay/platform-eng"
+severity: critical
+applies_to:
+  always: true
+rule: >
+  Verifiers run only against an environment whose /version reports the pull
+  request's head commit. Evidence from any other build is discarded.
+rationale: Assurance of a different build is not assurance of this change.
+obligations:
+  - id: PLT-001.1
+    statement: The QE environment reports the pull request's head commit at /version before and after verification.
+    evidence: { verifier: V1, check: qe-runs-head-commit }
+on_violated: block
+on_insufficient: block
+exceptions:
+  allowed: false
+effective_from: 2026-01-01
+review_by: 2027-12-31

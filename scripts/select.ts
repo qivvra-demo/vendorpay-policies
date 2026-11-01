@@ -56,7 +56,7 @@ const snapshot = {
   components: Object.fromEntries(hits),
   unmappedFiles: unmapped,
   policies: selected.map(({ file, raw, doc }) => ({
-    id: doc.id, version: doc.version, authority: doc.authority, owner: doc.owner, severity: doc.severity,
+    id: doc.id, title: doc.title, version: doc.version, authority: doc.authority, owner: doc.owner, severity: doc.severity,
     file, digest: 'sha256:' + sha256(raw),
     obligations: doc.obligations.map((o) => ({ id: o.id, statement: o.statement, verifier: o.evidence.verifier, check: o.evidence.check })),
   })),

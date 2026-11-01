@@ -73,7 +73,7 @@ npm run select -- --repo vendorpay --repo-dir ../vendorpay-app \
 
 For PR #482 this selects 6 policies and 14 obligations. The two that matter:
 
-| Obligation | Commit 1 (8cafa75) | Commit 2 (88b666a) | Commit 3 (aaf2a60) |
+| Obligation | Commit 1 (af51c26) | Commit 2 (ae50deb) | Commit 3 (3f6e20d) |
 |---|---|---|---|
 | FIN-001.1 Requester cannot approve | VIOLATED | SUPPORTED | SUPPORTED |
 | FIN-002.1 Scheduled payments held after a bank change | VIOLATED | VIOLATED | SUPPORTED |

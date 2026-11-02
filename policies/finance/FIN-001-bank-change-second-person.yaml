@@ -5,7 +5,7 @@ title: A bank account change needs a second person
 version: 1.0.0
 status: approved
 authority: finance
-owner: "@vendorpay/finance-controls"
+owner: "@qivvra-demo/finance-controls"
 severity: critical
 applies_to:
   components: [supplier-bank-accounts]

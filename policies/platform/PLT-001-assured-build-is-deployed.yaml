@@ -5,7 +5,7 @@ title: Evidence comes from the exact commit under review
 version: 1.0.0
 status: approved
 authority: platform
-owner: "@vendorpay/platform-eng"
+owner: "@qivvra-demo/platform-eng"
 severity: critical
 applies_to:
   always: true

@@ -3,7 +3,7 @@ apiVersion: qivvra/v1
 kind: Profile
 id: payments-critical
 title: "Payments: critical financial controls"
-owner: "@vendorpay/qivvra-assurance-leads"
+owner: "@qivvra-demo/qivvra-assurance-leads"
 authorities: [finance, security, compliance, platform]
 disposition:
   # Evaluated top to bottom; the first match wins.

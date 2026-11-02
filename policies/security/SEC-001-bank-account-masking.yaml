@@ -5,7 +5,7 @@ title: Bank account numbers never leave the service unmasked
 version: 1.1.0
 status: approved
 authority: security
-owner: "@vendorpay/security"
+owner: "@qivvra-demo/security"
 severity: high
 applies_to:
   components: [supplier-bank-accounts, payments, audit, logging]

@@ -1,12 +1,12 @@
 # A rule only becomes authoritative when its owning authority approves the PR that changes it.
 # Turn on "Require review from Code Owners" for main.
 
-*                       @vendorpay/qivvra-assurance-leads
-/policies/finance/      @vendorpay/finance-controls
-/policies/security/     @vendorpay/security
-/policies/compliance/   @vendorpay/compliance
-/policies/platform/     @vendorpay/platform-eng
-/exceptions/finance/    @vendorpay/finance-controls
-/exceptions/security/   @vendorpay/security
-/exceptions/compliance/ @vendorpay/compliance
-/exceptions/platform/   @vendorpay/platform-eng
+*                       @qivvra-demo/qivvra-assurance-leads
+/policies/finance/      @qivvra-demo/finance-controls
+/policies/security/     @qivvra-demo/security
+/policies/compliance/   @qivvra-demo/compliance
+/policies/platform/     @qivvra-demo/platform-eng
+/exceptions/finance/    @qivvra-demo/finance-controls
+/exceptions/security/   @qivvra-demo/security
+/exceptions/compliance/ @qivvra-demo/compliance
+/exceptions/platform/   @qivvra-demo/platform-eng

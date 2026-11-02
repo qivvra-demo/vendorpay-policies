@@ -5,7 +5,7 @@ title: Every supplier and payment change is in the audit trail
 version: 1.0.0
 status: approved
 authority: compliance
-owner: "@vendorpay/compliance"
+owner: "@qivvra-demo/compliance"
 severity: high
 applies_to:
   components: [supplier-bank-accounts, payments, audit]
